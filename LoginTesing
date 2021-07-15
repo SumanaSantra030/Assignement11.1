@@ -1,0 +1,67 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+public class urlTestTest {
+	 public static WebDriver driver;
+	 
+  @Test (priority=0)
+  public void titleTest() throws Exception{
+	  String expectedTitle="Insurance Broker System";
+	  String actualTitle = driver.getTitle();
+      //System.out.println("Page Title : "+title);
+	  Assert.assertEquals(expectedTitle, actualTitle);
+	  }
+	  
+ @Test (priority=1)
+ public void urlTest() {
+	 String expectedUrl = "http://demo.guru99.com/insurance/v1/header.php"; 
+	 String actualUrl = driver.getCurrentUrl();
+	 Assert.assertEquals(expectedUrl, actualUrl);
+ }
+ 
+ @Test (priority=2)
+ public void pageTitle() {
+	 String expectedTitle = "Broker Insurance WebPage";
+	 WebElement actualTitle = driver.findElement(By.xpath("//h2[normalize-space()='Broker Insurance WebPage']"));
+	 Assert.assertEquals(expectedTitle, actualTitle);
+	 
+	 WebElement logout = driver.findElement(By.className("btn-danger"));
+     logout.click();
+     System.out.println("Logout Successfully");
+ }
+ 
+ 
+ 
+  @BeforeMethod
+  public void beforeMethod() {
+	  System.setProperty("webdriver.chrome.driver","C:\\Selenium\\chromedriver.exe");
+      driver = new ChromeDriver();
+      
+      driver.get("http://demo.guru99.com/insurance/v1/index.php");
+      
+      WebElement email = driver.findElement(By.id("email"));
+      email.sendKeys("kushboosantra@gmail.com",Keys.INSERT); 
+      
+      WebElement Password = driver.findElement(By.id("password"));
+      Password.sendKeys("Da@mon20",Keys.INSERT);
+      
+      WebElement login = driver.findElement(By.name("submit"));
+      login.click();
+      
+     
+  }
+
+  @AfterMethod
+  public void afterMethod() {
+	 
+      driver.quit();
+  }
+
+}
